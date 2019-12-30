@@ -1,6 +1,6 @@
 {
   "name": "@meltwater/esi-include-plugin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "General plugin logic for esi:include script or source injection",
   "main": "src/index.js",
   "scripts": {
