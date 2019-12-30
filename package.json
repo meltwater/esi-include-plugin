@@ -1,0 +1,58 @@
+{
+  "name": "@meltwater/esi-include-plugin",
+  "version": "0.0.0",
+  "description": "General plugin logic for esi:include script or source injection",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meltwater/esi-include-plugin.git"
+  },
+  "keywords": [
+    "esi",
+    "esi-include",
+    "plugin"
+  ],
+  "author": "Team Cosmos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meltwater/esi-include-plugin/issues"
+  },
+  "homepage": "https://github.com/meltwater/esi-include-plugin#readme",
+  "release": {
+    "branch": "master",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "replace-in-file": "^5.0.2"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^3.0.6",
+    "@semantic-release/commit-analyzer": "^6.3.3",
+    "@semantic-release/git": "^7.0.18",
+    "@semantic-release/github": "^5.5.5",
+    "@semantic-release/npm": "^5.3.5",
+    "@semantic-release/release-notes-generator": "^7.3.5",
+    "semantic-release": "^15.14.0"
+  }
+}
