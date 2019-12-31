@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/meltwater/esi-include-plugin/compare/v1.0.1...v1.0.2) (2019-12-31)
+
+
+### Bug Fixes
+
+* logger definition bug ([2daf982](https://github.com/meltwater/esi-include-plugin/commit/2daf982b4dc83a7aa19289eaaf036f5490fa9ba8))
+
 ## [1.0.1](https://github.com/meltwater/esi-include-plugin/compare/v1.0.0...v1.0.1) (2019-12-31)
 
 
