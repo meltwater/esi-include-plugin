@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/meltwater/esi-include-plugin/compare/v1.0.0...v1.0.1) (2019-12-31)
+
+
+### Bug Fixes
+
+* fixing options validation, adding logger class, updating readme ([60a4d36](https://github.com/meltwater/esi-include-plugin/commit/60a4d368baa66789764a8078bbe358c70ec5efd8))
+
 # 1.0.0 (2019-12-30)
 
 
