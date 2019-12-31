@@ -4,7 +4,7 @@ const loggerUtil = require('./logger');
 const pluginName = 'esi-include';
 
 
-const logger = new loggerUtil();
+let logger = new loggerUtil();
 
 module.exports = async function esiInclude(options = {}) {
 
