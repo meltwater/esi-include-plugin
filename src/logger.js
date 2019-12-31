@@ -5,6 +5,9 @@ module.exports = class Logger {
     if (instance && options === undefined) {
       return instance;
     }
+    if(!options || !options.verbose) {
+      options.verbose = false;
+    }
     this.isVerbose = options.verbose;
     this.instance = this;
   }
