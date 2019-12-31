@@ -1,36 +1,33 @@
 const fetch = require('node-fetch');
-
 const replace = require('replace-in-file');
-
+const loggerUtil = require('./logger');
 const pluginName = 'esi-include';
+
+
+const logger;
 
 module.exports = async function esiInclude(options = {}) {
 
+  validateOptions(options);
+  logger = new loggerUtil(options);
 
-        if (!options.esi.length || options.esi.length === 0) return null;
+  if (!options.esi.length || options.esi.length === 0) return null;
 
-        options.replacers = await buildReplacers(options);
+  try {
+    options.replacers = await buildReplacers(options);
 
-        let replaceOptions = {
-          files: options.files,
-          from: options.replacers.map(replacer => replacer.searchString),
-          to: options.replacers.map(replacer => replacer.replaceString)
-        }
-        try{
-          const results = await replace(replaceOptions);
-          if(options.verbose) {
-            console.warn(`${JSON.stringify(results)}`);
-          }
-        } catch(error) {
-          throw new Error(`${pluginName} error'd attempting replace with error: ${error}`);
-        }
-      return true;
+    let replaceOptions = {
+      files: options.files,
+      from: options.replacers.map(replacer => replacer.searchString),
+      to: options.replacers.map(replacer => replacer.replaceString)
     }
-
-
-
-
-
+    const results = await replace(replaceOptions);
+    logger.verbose(`${JSON.stringify(results)}`);
+  } catch (error) {
+    throw new Error(`${pluginName} error: ${error}`);
+  }
+  return true;
+}
 
 function executeInclude(code, id, options) {
   options.replacers.forEach(replacer => {
@@ -41,17 +38,17 @@ function executeInclude(code, id, options) {
 
 async function buildReplacers(options) {
   let replacers = [];
-    const promises = options.esi.map(async (esiItem) => {
-      if (options.isLocalMode) {
-        replacers.push(await buildFullFileInclude(esiItem));
-      } else {
-        replacers.push(buildEsiString(esiItem));
-      }
-      return new Promise((result, reject) => { result() });
-    });
+  const promises = options.esi.map(async (esiItem) => {
+    if (options.isLocalMode) {
+      replacers.push(await buildFullFileInclude(esiItem));
+    } else {
+      replacers.push(buildEsiString(esiItem));
+    }
+    return new Promise((result, reject) => { result() });
+  });
 
-    await Promise.all(promises);
-    return replacers;
+  await Promise.all(promises);
+  return replacers;
 }
 
 
@@ -64,10 +61,10 @@ function buildEsiString(esiItem) {
   }
 
   let tag = `<!--esi <esi:include src="${esiItem.src}" no-store="${esiItem.noStore ? 'on' : 'off'}" onerror="${esiItem.onError}"`;
-  if(esiItem.ttl){
+  if (esiItem.ttl) {
     tag += ` ttl:"${esiItem.ttl}"`;
   }
-  if(esiItem.maxwait) {
+  if (esiItem.maxwait) {
     tag += ` maxwait="${esiItem.maxwait}"`;
   }
   tag += `></esi:include>-->`;
@@ -93,24 +90,16 @@ async function fetchInclude(uri, authorization) {
   }
   let res = await fetch(uri, options);
   let text = await res.text();
-  logVerbose(`${res.status} - ${uri} - ${text}`)
+  logger.verbose(`${res.status} - ${uri} - ${text}`);
 
   if (res.status !== 200) {
     console.error(`${pluginName} errored attempting to fetch ${uri}, returned with code ${res.status}`);
   }
 
   return text;
-
 }
-
-// This needs to be updated to only log when the verbose flag is set in the options
-function logVerbose(msg) {
-  console.log(msg);
-}
-
 
 function validateOptions(options) {
-
   const isLocal = process.env.buildTarget === 'LOCAL' || process.env.ENV === 'LOCAL' || process.env.ENV === 'DEV';
   const { esi } = options;
 
@@ -133,5 +122,3 @@ function validateOptions(options) {
     }
   });
 }
-
-
