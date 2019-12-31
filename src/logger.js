@@ -1,15 +1,29 @@
+"use strict";
+let instance = null;
 module.exports = class Logger {
-  static instance;
 
   constructor(options) {
     if (instance && options === undefined) {
       return instance;
     }
-    if(!options || !options.verbose) {
+    if(!options) {
+      options = {};
+    }
+    if(!options.verbose) {
       options.verbose = false;
     }
     this.isVerbose = options.verbose;
-    this.instance = this;
+    instance = this;
+  }
+
+  // bonus getInstance, does same as new really but could be more readable
+  static getInstance(options) {
+    if (instance) {
+      return instance;
+    } else {
+      instance = new Logger(options);
+      return instance;
+    }
   }
 
   verbose(msg) {
