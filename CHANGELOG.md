@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/meltwater/esi-include-plugin/compare/v1.0.3...v1.0.4) (2019-12-31)
+
+
+### Bug Fixes
+
+* fixing bugs and adding test ([e0a8711](https://github.com/meltwater/esi-include-plugin/commit/e0a8711d597dd27bdc19ec31ea2691f6159ddb09))
+
 ## [1.0.3](https://github.com/meltwater/esi-include-plugin/compare/v1.0.2...v1.0.3) (2019-12-31)
 
 
